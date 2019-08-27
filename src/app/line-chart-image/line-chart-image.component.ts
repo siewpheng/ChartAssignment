@@ -11,37 +11,34 @@ selector: 'app-line-chart-image',
 
 export class LineChartImageComponent implements OnInit {
   public lineChartData: ChartDataSets[] = [
-    { data: [10, 20, 30], label: 'Series 1' },
-    { data: [5, 30, 15], label: 'Series 2' },
- ];
-
- public lineChartLabels: Label[] = ['x', 'y', 'z'];
-  public lineChartColors: Color[] = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
+    { data: [], label: 'Series 1' },]
+  public lineChartLabels: Label[] = [];
+  public lineChartColors: Color[] = [ ];
+    // { // grey
+    //   backgroundColor: 'rgba(148,159,177,0.2)',
+    //   borderColor: 'rgba(148,159,177,1)',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // },
+    // { // dark grey
+    //   backgroundColor: 'rgba(77,83,96,0.2)',
+    //   borderColor: 'rgba(77,83,96,1)',
+    //   pointBackgroundColor: 'rgba(77,83,96,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(77,83,96,1)'
+    // },
+    // { // red
+    //   backgroundColor: 'rgba(255,0,0,0.3)',
+    //   borderColor: 'red',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // }
+ 
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -52,17 +49,7 @@ export class LineChartImageComponent implements OnInit {
       yAxes: [
         {
           id: 'y-axis-0',
-          position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
-          ticks: {
-            fontColor: 'red',
-          }
+          position: 'left',       
         }
       ]
     },
@@ -88,6 +75,36 @@ export class LineChartImageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    const imagedatedata = data
+
+    let datecount= { }
+    
+    for (const x of imagedatedata){
+      let AddDate = new Date (x.dateAdded)
+      const monthadd = AddDate.getMonth()
+      {
+ 
+        if (datecount[monthadd]){
+    // if movie already checked, increment by 1
+          datecount [monthadd] +=1
+                }        
+          else {
+           // if movie not yet checked, set to 1
+          datecount [monthadd] = 1
+        }
+
+        }
+    
+        console.log(datecount)
+        
+        for (const key in datecount) {
+          this.lineChartLabels.push(key)
+          const numTags = datecount[key]
+          this.lineChartData[0].data.push(numTags)
+      }
+
   }
 
+}
 }
